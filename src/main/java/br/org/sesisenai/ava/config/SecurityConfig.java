@@ -1,5 +1,6 @@
 package br.org.sesisenai.ava.config;
 
+import br.org.sesisenai.ava.authorizations.IsUser;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +18,7 @@ import org.springframework.security.web.context.SecurityContextRepository;
 public class SecurityConfig {
 
     private final SecurityContextRepository securityContextRepository;
-
+    private  IsUser isUser;
     @Bean
     public SecurityFilterChain config(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
@@ -26,6 +27,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET,"/api/cursos").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/usuarios").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/instrutor").permitAll()
+                .requestMatchers(HttpMethod.GET,"/api/usuarios/{id}").access(isUser)
+
                 .anyRequest().authenticated());
         http.formLogin(Customizer.withDefaults());
         http.logout(Customizer.withDefaults());
