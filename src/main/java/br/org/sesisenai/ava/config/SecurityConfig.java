@@ -19,6 +19,7 @@ public class SecurityConfig {
 
     private final SecurityContextRepository securityContextRepository;
     private  IsUser isUser;
+
     @Bean
     public SecurityFilterChain config(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
@@ -28,6 +29,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST,"/api/usuarios").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/instrutor").permitAll()
                 .requestMatchers(HttpMethod.GET,"/api/usuarios/{id}").access(isUser)
+                .requestMatchers(HttpMethod.PUT,"/api/usuarios/{id}").access(isUser)
+                .requestMatchers(HttpMethod.PATCH,"/api/usuarios/{id}/senha").access(isUser)
+                .requestMatchers(HttpMethod.DELETE,"/api/usuarios/{id}").access(isUser)
 
                 .anyRequest().authenticated());
         http.formLogin(Customizer.withDefaults());

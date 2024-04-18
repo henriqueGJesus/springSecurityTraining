@@ -2,6 +2,7 @@ package br.org.sesisenai.ava.entity;
 
 import br.org.sesisenai.ava.dto.abstraction.ResponseConversorDTO;
 import br.org.sesisenai.ava.dto.implementation.usuario.UsuarioResponseDTO;
+import br.org.sesisenai.ava.enumerators.Authorities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -62,6 +64,7 @@ public class Usuario implements ResponseConversorDTO<UsuarioResponseDTO> {
     public void setUsuarioDetailsEntity() {
         this.usuarioDetailsEntity = UsuarioDetailsEntity
                 .builder()
+                .authorities(List.of(Authorities.POST,Authorities.POST,Authorities.DELETE))
                 .usuario(this)
                 .build();
     }

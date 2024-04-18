@@ -1,5 +1,6 @@
 package br.org.sesisenai.ava.entity;
 
+import br.org.sesisenai.ava.enumerators.Authorities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @Entity
@@ -20,10 +22,10 @@ public class UsuarioDetailsEntity implements UserDetails {
     @OneToOne(mappedBy = "usuarioDetailsEntity")
     @JsonIgnore
     private Usuario usuario;
-
+    private Collection<Authorities> authorities;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.authorities;
     }
 
     @Override
